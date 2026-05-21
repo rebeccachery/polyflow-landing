@@ -1,12 +1,56 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import MapComponent from "@/components/Map";
 import { Play, ArrowRight, Globe, Mic2, Sparkles, TrendingUp } from "lucide-react";
+import { toast, Toaster } from "sonner";
+import { isSupabaseConfigured, supabase } from "@/lib/supabase";
+
+const WAITLIST_TABLE = "waitlist";
 
 export default function Home() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleWaitlistSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!isSupabaseConfigured || !supabase) {
+      toast.error("Contact form is not configured yet.");
+      return;
+    }
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim().toLowerCase();
+
+    if (!trimmedName || !trimmedEmail) {
+      toast.error("Please enter your name and email.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    const { error } = await supabase.from(WAITLIST_TABLE).insert({
+      name: trimmedName,
+      email: trimmedEmail,
+    });
+
+    setIsSubmitting(false);
+
+    if (error) {
+      toast.error(error.code === "23505" ? "That email is already on the waitlist." : "Could not join the waitlist. Please try again.");
+      return;
+    }
+
+    toast.success("You're on the waitlist.");
+    setName("");
+    setEmail("");
+  }
+
   return (
     <main>
+      <Toaster richColors position="top-center" />
       {/* Header */}
       <header className="container flex-center" style={{ justifyContent: "space-between", padding: "2rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -102,21 +146,29 @@ export default function Home() {
           <p style={{ color: "var(--text-muted)", marginBottom: "2rem" }}>
             Join the waitlist to get early access to our MVP and help shape the future of language learning.
           </p>
-          <form style={{ display: "flex", flexDirection: "column", gap: "1rem" }} onSubmit={(e) => e.preventDefault()}>
+          <form style={{ display: "flex", flexDirection: "column", gap: "1rem" }} onSubmit={handleWaitlistSubmit}>
             <input
               type="text"
+              name="name"
               placeholder="Your Name"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
               required
+              disabled={isSubmitting}
               style={{ width: "100%", padding: "1rem", borderRadius: "0.75rem", background: "rgba(0,0,0,0.5)", border: "1px solid var(--card-border)", color: "white", outline: "none", fontSize: "1rem" }}
             />
             <input
               type="email"
+              name="email"
               placeholder="Your Email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               required
+              disabled={isSubmitting}
               style={{ width: "100%", padding: "1rem", borderRadius: "0.75rem", background: "rgba(0,0,0,0.5)", border: "1px solid var(--card-border)", color: "white", outline: "none", fontSize: "1rem" }}
             />
-            <button type="submit" className="button" style={{ width: "100%", padding: "1rem", fontSize: "1.125rem", marginTop: "0.5rem" }}>
-              Join the Waitlist
+            <button type="submit" className="button" disabled={isSubmitting} style={{ width: "100%", padding: "1rem", fontSize: "1.125rem", marginTop: "0.5rem", opacity: isSubmitting ? 0.7 : 1 }}>
+              {isSubmitting ? "Joining..." : "Join the Waitlist"}
             </button>
           </form>
         </div>
