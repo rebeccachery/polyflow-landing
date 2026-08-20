@@ -1,0 +1,121 @@
+.section {
+  padding: clamp(3rem, 7vw, 5.5rem) 0;
+}
+
+.frame {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: end;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: calc(var(--radius-lg) + 8px);
+  background:
+    linear-gradient(135deg, rgba(22, 78, 122, 0.08), transparent 40%),
+    linear-gradient(320deg, rgba(224, 176, 74, 0.14), transparent 45%),
+    var(--bg-elevated);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-soft);
+}
+
+.copy {
+  max-width: 28rem;
+  padding-bottom: 0.5rem;
+}
+
+.eyebrow {
+  color: var(--blue);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.copy h2 {
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  margin-bottom: 1rem;
+}
+
+.copy p {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.phrase {
+  margin: 0;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 253, 248, 0.72);
+  border: 1px solid var(--line);
+}
+
+.phrase blockquote {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.phrase figcaption {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.phrase figcaption span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.phrase figcaption strong {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.meta .mono {
+  color: var(--blue);
+  font-size: 0.95rem;
+}
+
+.audio {
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  color: var(--ink);
+  border-radius: 999px;
+  min-height: 40px;
+  padding: 0.45rem 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.audio:hover {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.error {
+  margin-top: 0.85rem;
+  color: var(--ember);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 860px) {
+  .frame {
+    grid-template-columns: 1fr;
+  }
+}

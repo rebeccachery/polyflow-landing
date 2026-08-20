@@ -1,0 +1,160 @@
+.hero {
+  position: relative;
+  min-height: calc(100svh - var(--header-h));
+  display: flex;
+  align-items: center;
+  padding: clamp(2rem, 5vw, 3.5rem) 0 clamp(2.5rem, 6vw, 4rem);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 8% -5% auto auto;
+  width: min(58vw, 720px);
+  aspect-ratio: 1.1;
+  background:
+    radial-gradient(circle at 40% 40%, rgba(22, 78, 122, 0.12), transparent 62%),
+    radial-gradient(circle at 70% 60%, rgba(224, 176, 74, 0.2), transparent 58%);
+  pointer-events: none;
+  filter: blur(8px);
+}
+
+.grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  width: 100%;
+}
+
+.copy {
+  max-width: 36rem;
+}
+
+.brand {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 550;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--blue-deep);
+}
+
+.title {
+  font-size: clamp(2.4rem, 5.4vw, 3.8rem);
+  margin-bottom: 1.25rem;
+  color: var(--ink);
+}
+
+.title em {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.lead {
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  color: var(--muted);
+  max-width: 34rem;
+  margin-bottom: 2rem;
+  line-height: 1.65;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.status {
+  margin-top: 0.85rem;
+  color: var(--ember);
+  font-size: 0.9rem;
+  max-width: 32rem;
+}
+
+.visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.micro {
+  text-align: center;
+  display: grid;
+  gap: 0.75rem;
+  justify-items: center;
+}
+
+.micro p {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.playChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.8);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: var(--shadow-tight);
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.playChip:hover {
+  border-color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.chipActive {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.playChip strong {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 550;
+}
+
+.playChip .mono,
+.playChip span:last-child {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 920px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .copy {
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .lead {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .actions {
+    justify-content: center;
+  }
+
+  .brand {
+    font-size: clamp(2.6rem, 10vw, 3.6rem);
+  }
+
+  .title {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+}
